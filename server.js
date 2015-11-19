@@ -8,16 +8,8 @@ function start(route, handle) {
 		//temporarily hide 'noise'
 		if (pathname != "/favicon.ico") {
 			console.log("Request for " + pathname + " received.");
+			route(handle, pathname, response);
 		}
-		
-		route(handle, pathname);
-		
-		response.writeHead(200, {"Content-Type": "text/html"});
-		response.write("<html><head><title>Hello.</title></head>");
-		response.write("<body>");
-		response.write("<p>Hello world.</p>");
-		response.write("</body></html>");	
-		response.end();
 	}
 	
 	http.createServer(onRequest).listen(8888);
