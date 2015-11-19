@@ -1,3 +1,14 @@
+var exec = require("child_process").exec;
+
+function ls() {
+	console.log("Request handler 'ls' was called.");
+	var content = "ls";
+	exec("ls ~/Code/helloNode -lah", function(error, stdout, stderr){
+		content = stdout;
+	})
+	return content;
+}
+
 function start() {
 	
 	function sleep(milliSeconds){
@@ -17,3 +28,4 @@ function upload() {
 
 exports.start = start;
 exports.upload = upload;
+exports.ls = ls;

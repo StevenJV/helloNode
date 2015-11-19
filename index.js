@@ -6,5 +6,6 @@ var handle = {};
 handle["/"] = requestHandlers.start;
 handle["/start"] = requestHandlers.start;
 handle["/upload"] = requestHandlers.upload;
+handle["/ls"] = requestHandlers.ls;
 
 server.start(router.route, handle);
