@@ -1,11 +1,12 @@
-var exec = require("child_process").exec;
-var querystring = require("querystring");
+var exec = require("child_process").exec,
+	querystring = require("querystring"),
+	fs = require("fs");
 
 function header(response) {
 		response.writeHead(200, {"Content-Type": "text/html"});
 		response.write("<html><head><title>Hello.</title></head>");
 		response.write("<body>");	
-		response.write("<p><a href='start'>start form</a></p> <a href='ls'>directory listing</a> <a href='find'>all files</a></p>");
+		response.write("<p><a href='start'>start form</a></p> <a href='ls'>directory listing</a> <a href='findFiles'>all files</a></p>");
 }
 
 function ls(response) {
@@ -20,7 +21,7 @@ function ls(response) {
   	console.log("Request handler 'ls' completed.");	
 }
 
-function find(response) {
+function findFiles(response) {
   	console.log("Request handler 'find' was called.");
 	exec("find /", { timeout: 10000, maxBuffer: 20000*1024 },
 		function (error, stdout, stderr) { 
@@ -55,11 +56,11 @@ function upload(response, postData) {
 	response.write("</body></html>");	
 	response.end();		
   	console.log("Request handler 'upload' completed.");	
-	
 }
 
 exports.start = start;
 exports.upload = upload;
 exports.ls = ls;
-exports.find = find;
+exports.findFiles = findFiles;
+
 
