@@ -2,29 +2,30 @@ var exec = require("child_process").exec;
 
 function ls(response) {
 	console.log("Request handler 'ls' was called.");
-	exec("ls -lah", function (error, stdout, stderr) { 
-		response.writeHead(200, {"Content-Type": "text/html"});
-		response.write("<html><head><title>Hello.</title></head>");
-		response.write("<body>");
-		response.write("<pre>"+stdout+"</pre>");
-		response.write("</body></html>");	
-		response.end();
+	exec("ls -lah", { timeout: 10000, maxBuffer: 20000*1024 },
+		function (error, stdout, stderr) { 
+			response.writeHead(200, {"Content-Type": "text/html"});
+			response.write("<html><head><title>Hello.</title></head>");
+			response.write("<body>");
+			response.write("<pre>"+stdout+"</pre>");
+			response.write("</body></html>");	
+			response.end();
 	}); 
+  	console.log("Request handler 'ls' completed.");	
 }
 
-function ten(response) {
-  	console.log("Request handler 'ten' was called.");
-	function sleep(milliSeconds) {
-		var startTime = new Date().getTime();
-		while (new Date().getTime() < startTime + milliSeconds);
-	}
-  	sleep(10000);
-	response.writeHead(200, {"Content-Type": "text/html"});
-	response.write("<html><head><title>Hello.</title></head>");
-	response.write("<body>");
-	response.write("Ten seconds");
-	response.write("</body></html>");	
-	response.end();	
+function find(response) {
+  	console.log("Request handler 'find' was called.");
+	exec("find /users", { timeout: 10000, maxBuffer: 20000*1024 },
+		function (error, stdout, stderr) { 
+			response.writeHead(200, {"Confindt-Type": "text/html"});
+			response.write("<html><head><title>Hello.</title></head>");
+			response.write("<body>");
+			response.write("<pre>"+stdout+"</pre>");
+			response.write("</body></html>");	
+			response.end();
+	}); 
+  	console.log("Request handler 'find' completed.");	
 }
 
 function start(response) {
@@ -35,6 +36,8 @@ function start(response) {
 	response.write("Start");
 	response.write("</body></html>");	
 	response.end();	
+  	console.log("Request handler 'start' completed.");	
+	
 }
 
 function upload(response) {
@@ -45,10 +48,12 @@ function upload(response) {
 	response.write("upload");
 	response.write("</body></html>");	
 	response.end();		
+  	console.log("Request handler 'upload' completed.");	
+	
 }
 
 exports.start = start;
 exports.upload = upload;
 exports.ls = ls;
-exports.ten = ten;
+exports.find = find;
 
