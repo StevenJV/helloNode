@@ -58,9 +58,15 @@ function upload(response, postData) {
   	console.log("Request handler 'upload' completed.");	
 }
 
+function show(response) {
+	console.log("Request handler 'show' was called.");
+	response.writeHead(200, {"Content-Type": "image/png"});
+	fs.createReadStream("images/jedi.png").pipe(response);
+}
+
 exports.start = start;
 exports.upload = upload;
 exports.ls = ls;
 exports.findFiles = findFiles;
-
+exports.show = show;
 
